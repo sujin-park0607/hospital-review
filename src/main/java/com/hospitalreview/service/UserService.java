@@ -38,7 +38,16 @@ public class UserService {
                 .build();
     }
 
-    public String login(String userNmae, String password) {
+    public String login(String userName, String password) {
+        //userName있는지 여부 확인
+        User user = userRepository.findByUserName(userName)
+                .orElseThrow(()-> new HospitalReviewException(ErrorCode.NOT_FOUND,String.format("%s 가입된 적이 없습니다.", userName)));
+
+        //password일차 하는지 여부 확인
+        if(!encoder.matches(password, user.getPassword())){
+            new HospitalReviewException(ErrorCode.NOT_FOUND,"비밀번호가 다릅니다.");
+        }
+        //두가지 확인중
         return "";
     }
 }
