@@ -37,6 +37,13 @@ class UserControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
+
+    UserJoinRequest userJoinRequest = UserJoinRequest.builder()
+            .userName("xxxx")
+            .password("1q2w3e4e")
+            .email("abcde@gmail.com")
+            .build();
+
     @Test
     @DisplayName("회원가입 성공")
     @WithMockUser
@@ -75,6 +82,40 @@ class UserControllerTest {
                         .content(objectMapper.writeValueAsBytes(userJoinRequest)))
                 .andDo(print())
                 .andExpect(status().isConflict());
+    }
+
+    @Test
+    @DisplayName("로그인 실패 - id 없음")
+    @WithMockUser
+    void login_fail1() throws Exception{
+        String id = "sujin";
+        String password = "1q2w3e4r";
+
+        when(userService.login(any(), any())).thenThrow(new HospitalReviewException(ErrorCode.NOT_FOUND, ""));
+
+        //무엇을 보내서 -> id, password
+        //
+        mockMvc.perform(post("/api/v1/users")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(userJoinRequest)))
+                .andDo(print())
+                .andExpect(status().isConflict());
+
+    }
+
+    @Test
+    @DisplayName("로그인 실패 - password 잘못 입력")
+    @WithMockUser
+    void login_fail2() throws Exception{
+
+    }
+
+    @Test
+    @DisplayName("로그인 성공")
+    @WithMockUser
+    void login_success() throws Exception{
+
     }
 
 }

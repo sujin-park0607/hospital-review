@@ -37,5 +37,9 @@ public class UserService {
                 .email(savedUser.getEmailAddress())
                 .build();
     }
+
+    public String login(String userNmae, String password) {
+        return "";
+    }
 }
 
