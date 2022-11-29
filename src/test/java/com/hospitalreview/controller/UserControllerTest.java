@@ -22,7 +22,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@WebMvcTest(UserController.class)
+
+
 class UserControllerTest {
     @Autowired
     MockMvc mockMvc;
@@ -37,7 +39,7 @@ class UserControllerTest {
     @DisplayName("회원 가입 성공")
     void join_success() throws Exception{
         UserJoinRequest userJoinRequest = UserJoinRequest.builder()
-                .userName("sujin")
+                .userName("yyyy")
                 .password("1111")
                 .email("abcde@gmail.com")
                 .build();
@@ -54,7 +56,7 @@ class UserControllerTest {
     @DisplayName("회원가입 실패")
     void join_fail() throws Exception{
         UserJoinRequest userJoinRequest = UserJoinRequest.builder()
-                .userName("sujin")
+                .userName("xxxx")
                 .password("1q2w3e4e")
                 .email("abcde@gmail.com")
                 .build();
